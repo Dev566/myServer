@@ -3,6 +3,7 @@ from flask import flash
 from flask import request
 import json
 import requests
+from .videoAnalysisHelper import fetchURLDetail
 
 bp = Blueprint("page", __name__, url_prefix='/waku')
 
@@ -25,8 +26,9 @@ def fetch_webpage_content(url: str) -> str:
 @bp.route('/download', methods=['POST'])
 def video_analysis():
     url = request.json['url']
-    fetch_webpage_content(url)
-    locations_set = fetch_webpage_content(url)
+    # fetch_webpage_content(url)
+    
+    locations_set = fetchURLDetail.fetch_url_details(url)
     data = {}
     data['content'] = locations_set
     data['status'] = "200"
